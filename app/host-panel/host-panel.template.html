@@ -1,0 +1,18 @@
+<div class="panel-heading">
+	Scrum master actions</div>
+<div class="panel-body">
+	<div class="form-inline">
+		<label>Set topic/user story</label>
+		<input type="text" class="form-control" ng-model="$ctrl.topic" placeholder="Enter topic/user story number" />
+		<button class="btn btn-primary" ng-click="$ctrl.setTopic()">Send</button>
+		<button class="btn btn-danger pull-right" ng-click="$ctrl.resetTopic()">Reset</button>
+	</div>
+	<br><br>
+	<p><i>If a participant looses connection and rejoins, then click the 'Send' button again to send the topic/userstory.</i></p>
+	<p><i>Use 'Reset' button when pointing is finished.</i></p>
+	<hr>
+	<p>Click reveal to see the points from participants when every one finished pointing</p>
+	<p class="text-center">
+		<button class="btn btn-success btn-lg" ng-click="$ctrl.reveal()">Reveal</button>
+	</p>
+</div>

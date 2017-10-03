@@ -1,0 +1,8 @@
+<div class="panel-heading">Participants</div>
+<div class="panel-body">
+	<ul class="all-participants">
+		<li ng-repeat="participant in $ctrl.participants">
+			{{participant.user_name}}<span ng-if="participant.isHost"> (Host)</span>
+		</li>
+	</ul>
+</div>
