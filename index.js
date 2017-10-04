@@ -53,10 +53,6 @@ io.on('connection', function (socket) {
 		}
 	});
 
-	
-
-	io.emit('open-login', {for: 'everyone'});
-
 	socket.on('disconnect', function () {
 		console.log('user disconnected');
 		var user;

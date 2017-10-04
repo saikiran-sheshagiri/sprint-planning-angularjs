@@ -82,3 +82,7 @@
 .show-points {
 	display: block !important;
 }
+
+.navbar {
+	margin-bottom: 0px;
+}

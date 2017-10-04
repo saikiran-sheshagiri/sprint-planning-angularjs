@@ -13,5 +13,7 @@ angular.module('app').constant('PlanningEventConstants', {
 		DISABLE_POINTING:'planning:disable-pointing',
 		REVEAL_POINTS: 'planning:reveal-points',
 		SHOW_POINTS: 'planning:show-points',
-		RESET_TOPIC: 'planning:reset-topic'
+		RESET_TOPIC: 'planning:reset-topic',
+		EXISTING_ROOMS: 'planning:rooms',
+		JOIN_ROOM: 'planning:join-room'
 	});

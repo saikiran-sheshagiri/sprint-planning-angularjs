@@ -23,10 +23,16 @@
 	<nav class="navbar navbar-dark bg-primary" style="border-radius: 0px;">
 		<span class="navbar-brand">Sprint planning</span>
 	</nav>
-	<div ng-controller="AppController as vm" 
+	<!-- <div ng-controller="AppController as vm" 
 		 ng-include="'app/app.template.html'"
 		 ng-init="vm.init()">
+	</div> -->
+
+	<div class="jumbotron">
+		<p>Welcome to the planning poker app. Join a room from the below list or create a room with a 4 digit PIN so your team can join.</p>
 	</div>
+	<div ng-controller="LobbyController as lobbyCtrl"
+		 ng-include="'app/lobby/lobby.template.html'"></div>
 
 	<!-- vendor scripts -->
 	<script src="/socket.io/socket.io.js"></script>
@@ -47,6 +53,9 @@
 	<script src="app/participant-panel/participant-panel.component.js"></script>
 	<script src="app/host-panel/host-panel.component.js"></script>
 
+	<script src="app/lobby/lobby.controller.js"></script>
+	<script src="app/create-room/create-room.controller.js"></script>
+
 	<!-- Application constants -->
 	<script src="app/constants/socketio.constants.js"></script>
 
@@ -55,6 +64,7 @@
 
 	<!-- Services -->
 	<script src="app/services/planning.service.js"></script>
+	<script src="app/services/rooms.service.js"></script>
 </body>
 
 </html>

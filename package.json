@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "version1": "nodemon server/server.js"
   },
   "author": "Saikiran Sheshagiri",
   "license": "ISC",
   "dependencies": {
     "angular-ui-bootstrap": "^2.5.0",
+    "body-parser": "^1.18.2",
     "express": "^4.15.4",
     "lodash": "^4.17.4",
     "socket.io": "^2.0.3"
