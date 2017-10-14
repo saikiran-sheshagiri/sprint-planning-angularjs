@@ -1,4 +1,10 @@
+.user-name {
+	text-transform: capitalize;
+}
 
+
+
+/* css styles from first version*/
 .card {
 	border: #484343 1px solid;
 	height: 150px;

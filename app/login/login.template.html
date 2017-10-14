@@ -15,11 +15,17 @@
 			<div class="form-check form-check-inline">
 				<label class="form-check-label">
 					<input class="form-check-input" type="checkbox" ng-model="loginCtrl.isHost"> I'm scrum master
-			</label>
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<label class="form-check-label">
+					<input class="form-check-input" type="checkbox" ng-model="loginCtrl.isChicken"> I'm just listening (Chiken)
+				</label>
 			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
 		<button type="submit" class="btn btn-primary" ng-click="loginCtrl.join()">Join</button>
+		<button class="btn btn-cancel" ng-click="loginCtrl.cancel()">Cancel</button>
 	</div>
 </form>

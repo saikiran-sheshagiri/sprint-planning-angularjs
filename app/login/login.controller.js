@@ -1,26 +1,33 @@
 angular.module('app').controller('LoginController', LoginController);
 
-LoginController.$inject = ['PlanningService', '$uibModalInstance', '$scope', 'PlanningEventConstants'];
+LoginController.$inject = ['PlanningService', '$uibModalInstance', '$scope', 'PlanningEventConstants', 'room', '$state'];
 
-function LoginController(PlanningService, $uibModalInstance, $scope, PlanningEventConstants){
+function LoginController(PlanningService, $uibModalInstance, $scope, PlanningEventConstants, room, $state){
 	var self = this;
 	self.isHost = false;
+	self.isChicken = false;
 	self.hostAlreadyJoined = false;
 	
 	PlanningService.listen(PlanningEventConstants.HOST_ALREADY_JOINED, function() {
 		self.hostAlreadyJoined = true;
 	});
 
-	PlanningService.listen(PlanningEventConstants.WELCOME_USER, function(user){
-		$uibModalInstance.close(user);
+	PlanningService.listen(PlanningEventConstants.USER_ADDED_ROOM, function(data){
+		$uibModalInstance.close();
+		
+		$state.go('room', {roomName: data.room.name, user: data.user, room: data.room});
 	});
 
 	self.join = function() {
-
-		PlanningService.send(PlanningEventConstants.JOIN_PLANNING, {
+		PlanningService.send(PlanningEventConstants.JOIN_ROOM, {
 			name: self.userName,
-			host: self.isHost
+			isHost: self.isHost,
+			isChicken: self.isChicken,
+			roomName: room.name
 		});
+	}
 
+	self.cancel = function() {
+		$uibModalInstance.dismiss();
 	}
 }

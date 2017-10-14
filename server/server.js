@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const SocketIO = require('socket.io');
 const path = require('path');
-const {addRoom, deleteRoom} = require('./rooms');
+const {addRoom, deleteRoom, getRooms, addUser} = require('./rooms');
 const bodyParser = require('body-parser')
 
 let app = express();
@@ -59,7 +59,52 @@ app.delete('/rooms', (request, response) => {
 	io.emit('planning:rooms', status.rooms);
 });
 
+/** Socket IO implementation - Start */
 
+io.on('connection', (socket) => {
+	//Users are by default connection to root/lobby '/' Emit the existing rooms
+	io.emit('planning:rooms', getRooms());
+
+	socket.on('planning:join-room', function(data) {
+		console.log(data);
+		var response = addUser(data.name, data.isHost, data.isChicken, data.roomName);
+
+		switch(response.message) {
+			case 'USER ADDED':
+				//If a user is successfully added to the room, join the user to room
+				socket.join(data.roomName);
+				console.log(io.sockets.adapter.rooms);
+				//Emit user added succesfully to the socket
+				socket.emit('planning:user-added-room', {
+					user: response.user,
+					room: response.room
+				});
+				console.log('emit the user added event');
+				//emit welcome message to user
+				socket.emit('planning:welcome-user', response.user);
+				console.log('emit the welcome message to user');
+				//Braoadcast user joined to the room
+				socket.broadcast.to(response.room.name).emit('planning:user-joined', response.user);
+				//send participant list to the room
+				io.sockets.to(response.room.name).emit('planning:participant-list', response.room.users);	
+				console.log(response.room);			
+				console.log('emitting all particiapnts to room' + response.room.name);
+				break;
+			case 'ROOM NOT FOUND': 
+				console.log('room not found');
+				break;
+			default:
+				console.log('Unable to add user');
+			
+		}
+		
+		//Emit planning rooms with latest changes
+		io.emit('planning:rooms', getRooms());
+	});
+
+});
+
+/** Socket IO implementation - End */
 server.listen(port, () => {
     console.log('[INFO] Listening on *:' + port);
 });

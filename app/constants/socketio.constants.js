@@ -15,5 +15,6 @@ angular.module('app').constant('PlanningEventConstants', {
 		SHOW_POINTS: 'planning:show-points',
 		RESET_TOPIC: 'planning:reset-topic',
 		EXISTING_ROOMS: 'planning:rooms',
-		JOIN_ROOM: 'planning:join-room'
+		JOIN_ROOM: 'planning:join-room',
+		USER_ADDED_ROOM: 'planning:user-added-room'
 	});

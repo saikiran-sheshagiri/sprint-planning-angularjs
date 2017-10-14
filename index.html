@@ -17,23 +17,18 @@
 		// window.onbeforeunload = closeIt;
 	</script>
 	<script src="assets/js/angular.min.js"></script>
+	<script src="assets/js/angular-ui-router.min.js"></script>
+	<base href="/">
 </head>
 
 <body>
 	<nav class="navbar navbar-dark bg-primary" style="border-radius: 0px;">
 		<span class="navbar-brand">Sprint planning</span>
 	</nav>
-	<!-- <div ng-controller="AppController as vm" 
-		 ng-include="'app/app.template.html'"
-		 ng-init="vm.init()">
-	</div> -->
-
-	<div class="jumbotron">
+	<div class="jumbotron" ng-controller="AppController">
 		<p>Welcome to the planning poker app. Join a room from the below list or create a room with a 4 digit PIN so your team can join.</p>
 	</div>
-	<div ng-controller="LobbyController as lobbyCtrl"
-		 ng-include="'app/lobby/lobby.template.html'"></div>
-
+	<ui-view></ui-view>
 	<!-- vendor scripts -->
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="assets/js/jquery-1.11.1.js"></script>
@@ -45,7 +40,9 @@
 
 	<!-- Application scripts -->
 	<script src="app/app.module.js"></script>
+	<script src="app/config/app.config.js"></script>
 	<script src="app/app.controller.js"></script>
+	<script src="app/planning-room/planning-room.controller.js"></script>
 	<script src="app/login/login.controller.js"></script>
 	<script src="app/user-info/user-info.component.js"></script>
 	<script src="app/participant-list/participant-list.component.js"></script>

@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8">
+			<div class="panel panel-default">
+				<planning-table topic-enabled="planningRoomCtrl.topicInProgress"
+								topic="planningRoomCtrl.topic" 
+								is-host="planningRoomCtrl.isHost" 
+								participants="planningRoomCtrl.participantPoints"
+								show-points="planningRoomCtrl.showPoints"></planning-table>
+			</div>
+			<div class="panel panel-default">
+				<participant-panel ng-if="!planningRoomCtrl.isHost" topic="planningRoomCtrl.topic" pointing-enabled="planningRoomCtrl.pointingEnabled"></participant-panel>
+				<host-panel ng-if="planningRoomCtrl.isHost" topic="planningRoomCtrl.topic"></host-panel>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-default">
+				<user-info user="planningRoomCtrl.user"></user-info>
+			</div>
+			<div class="panel panel-default">
+				<participant-list participants="planningRoomCtrl.participants"></participant-list>
+			</div>
+		</div>
+	</div>
+</div>

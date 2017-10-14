@@ -1,12 +1,11 @@
 <div class="container">
 	<button ng-click="lobbyCtrl.create()">Create a room</button>
-	<button>Join a room</button>
 </div>
 <div class="contrainer" ng-if="lobbyCtrl.rooms.length">
 	<h3>Existing rooms:</h3>
 	<ul>
 		<li ng-repeat="room in lobbyCtrl.rooms">
-			{{room | json}}
+			{{room | json}}<a href ng-click="lobbyCtrl.join(room)"> Join this meeting</a>
 		</li>
 	</ul>
 </div>
