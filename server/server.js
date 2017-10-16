@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
 
 	socket.on('planning:join-room', function(data) {
 		console.log(data);
-		var response = addUser(data.name, data.isHost, data.isChicken, data.roomName);
+		var response = addUser(data.name, data.accessCode, data.isHost, data.isChicken, data.roomName);
 
 		switch(response.message) {
 			case 'USER ADDED':
@@ -94,6 +94,9 @@ io.on('connection', (socket) => {
 				break;
 			case 'HOST JOINED ALREADY':
 				socket.emit('planning:host-joined');
+				break;
+			case 'INVALID ACCESS CODE':
+				socket.emit('planning:invali-accesscode');
 				break;
 			default:
 				console.log('Unable to add user');
@@ -128,7 +131,7 @@ io.on('connection', (socket) => {
 				console.log('Some thing broken here');
 		}
 
-		if(response && reponse.room && response.room.users && response.room.users.length === 0) {
+		if(response && response.room && response.room.users && response.room.users.length === 0) {
 			deleteRoom(response.room.name);
 			io.emit('planning:rooms', getRooms());
 		}
@@ -183,7 +186,7 @@ io.on('connection', (socket) => {
 				console.log('Some thing broken here');
 		}
 
-		if(response.room.users.length === 0) {
+		if(response && response.room && response.room.users && response.room.users.length === 0) {
 			deleteRoom(response.room.name);
 			io.emit('planning:rooms', getRooms());
 		}

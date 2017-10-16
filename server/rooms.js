@@ -16,7 +16,7 @@ exports.addRoom = (roomName, accessCode) => {
 	else {
 		ROOMS.push({
 			name: roomName,
-			secret: accessCode,
+			accessCode: accessCode,
 			users: [],
 			topics: []
 		});
@@ -47,7 +47,7 @@ exports.getRooms = () => {
 	return ROOMS;
 }
 
-exports.addUser = (userName, isHost, isChicken, roomName) => {
+exports.addUser = (userName, accessCode, isHost, isChicken, roomName) => {
 	let user = {
 		name: userName,
 		isHost: isHost,
@@ -58,16 +58,18 @@ exports.addUser = (userName, isHost, isChicken, roomName) => {
 	let room = getRoom(roomName);
 
 	if(room !== undefined) {
-		let hostJoinedAlready = _.some(room.users, { 'isHost': true});
+		if(room.accessCode === accessCode) {
+			let hostJoinedAlready = _.some(room.users, { 'isHost': true});
 
-		if(user.isHost && hostJoinedAlready){
-			message = 'HOST JOINED ALREADY';
+			if(user.isHost && hostJoinedAlready){
+				message = 'HOST JOINED ALREADY';
+			} else {
+					room.users.push(user);
+				message = 'USER ADDED';
+			}
 		} else {
-			room.users.push(user);
-			message = 'USER ADDED';
+			message = 'INVALID ACCESS CODE';
 		}
-
-		
 	} else {
 		message = 'ROOM NOT FOUND';
 	}
@@ -82,7 +84,7 @@ exports.addUser = (userName, isHost, isChicken, roomName) => {
 exports.removeUser = (userName, roomName) => {
 	let room = getRoom(roomName);
 
-	if(userExists(userName, room)) {
+	if(userExists(userName, room) && typeof room !== 'undefined') {
 		_.remove(room.users, { 'name': userName });
 
 		return {

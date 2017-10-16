@@ -92,3 +92,16 @@
 .navbar {
 	margin-bottom: 0px;
 }
+
+ul.planning-rooms li{
+	list-style: none;
+	padding: 20px;
+	background-color: greenyellow;
+	border: 1px solid brown;
+	cursor: pointer;
+	float: left;
+	margin: 10px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 25px;
+	width: 200px;
+}

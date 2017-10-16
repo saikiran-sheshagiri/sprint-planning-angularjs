@@ -4,12 +4,16 @@
 	</div>
 	<div class="modal-body">
 		<div class="alert alert-danger" ng-show="loginCtrl.hostAlreadyJoined">
-			<strong>Host already joined!</strong> If you are the real host, ask your participants to refresh and join as an attendee.
+			<strong>Host already joined!</strong> If you are the actual host, ask your participants to exit the meeting.
 		</div>
-
+		<div class="alert alert-danger" ng-show="loginCtrl.invalidAccessCode">
+				<strong>Invalid access code!</strong> Please enter a valid access code, ask your Scrum master for details.
+		</div>
 		<div class="form-group">
 			<input type="text" class="form-control" ng-model="loginCtrl.userName" placeholder="Enter your name" focus="true" />
-
+		</div>
+		<div class="form-group">
+			<input type="number" class="form-control" ng-model="loginCtrl.accessCode" placeholder="Enter a access code for your room" />	
 		</div>
 		<div class="form-group">
 			<div class="form-check form-check-inline">

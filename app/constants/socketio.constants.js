@@ -20,5 +20,6 @@ angular.module('app').constant('PlanningEventConstants', {
 		LEAVE_ROOM: 'planning:leave-room',
 		USER_LEFT_PLANNING: 'planning:user-left',
 		TOPIC_USERS_POINTS: 'planning:topic-points',
-		TOPIC_CLOSED: 'planning:topic-closed'
+		TOPIC_CLOSED: 'planning:topic-closed',
+		INVALID_ACCESS_CODE: 'planning:invali-accesscode'
 	});
