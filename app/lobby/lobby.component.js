@@ -1,6 +1,4 @@
-angular.module('app').controller('LobbyController', LobbyController);
-
-LobbyController.$inject = ['$scope', '$uibModal', 'PlanningEventConstants', 'PlanningService']
+LobbyController.$inject = ['$scope', '$uibModal', 'PlanningEventConstants', 'PlanningService'];
 
 function LobbyController($scope, $uibModal, PlanningEventConstants, PlanningService) {
 
@@ -38,7 +36,13 @@ function LobbyController($scope, $uibModal, PlanningEventConstants, PlanningServ
 			}
 		});
 	
-		loginModalInstance.result.then(function (user) {
+		loginModalInstance.result.then(function (response) {
+			if(response.message === 'USER ADDED') {
+				self.joinedPlanning = true;
+				self.user = response.user;
+				self.room = response.room;
+			}
+
 			console.log(new Date() + ' :: LOGIN MODAL INSTANCE - CLOSED');
 		  }, function (error) {
 			console.info('Modal dismissed at: ' + new Date());
@@ -53,4 +57,16 @@ function LobbyController($scope, $uibModal, PlanningEventConstants, PlanningServ
 
 	console.log('Lobby controller loaded');
 }
+
+angular.module('app').component('lobby', {
+	templateUrl: '/app/lobby/lobby.template.html',
+	controller: LobbyController,
+	controllerAs: 'lobbyCtrl',
+	bindings: {
+		joinedPlanning: '=',
+		user: '=',
+		room:'='
+	}
+});
+
 

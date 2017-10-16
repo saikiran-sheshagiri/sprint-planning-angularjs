@@ -57,8 +57,16 @@ exports.addUser = (userName, isHost, isChicken, roomName) => {
 	let room = getRoom(roomName);
 
 	if(room !== undefined) {
-		room.users.push(user);
-		message = 'USER ADDED';
+		let hostJoinedAlready = _.some(room.users, { 'isHost': true});
+
+		if(user.isHost && hostJoinedAlready){
+			message = 'HOST JOINED ALREADY';
+		} else {
+			room.users.push(user);
+			message = 'USER ADDED';
+		}
+
+		
 	} else {
 		message = 'ROOM NOT FOUND';
 	}
@@ -70,10 +78,43 @@ exports.addUser = (userName, isHost, isChicken, roomName) => {
 	}
 }
 
+exports.removeUser = (userName, roomName) => {
+	let room = getRoom(roomName);
+
+	if(userExists(userName, room)) {
+		_.remove(room.users, { 'name': userName });
+
+		return {
+			message: 'USER REMOVED',
+			room: room
+		}
+	} 
+	else {
+		return {
+			message: 'INVALID USER',
+			room: room
+		}
+	}
+}
+
+exports.getUsers = (roomName) => {
+
+	if(roomExists(roomName)) {
+		let room = getRoom(roomName);
+		return room.users;
+	} else {
+		return 'INVALID ROOM';
+	}
+}
+
 function roomExists(roomName) {
 	return _.some(ROOMS, (room) => { return room.name === roomName});
 }
 
 function getRoom(roomName) {
 	return _.find(ROOMS, { 'name': roomName });
+}
+
+function userExists(userName, room) {
+	return _.some(room.users, { 'name': userName });
 }

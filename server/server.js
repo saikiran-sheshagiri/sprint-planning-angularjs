@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const SocketIO = require('socket.io');
 const path = require('path');
-const {addRoom, deleteRoom, getRooms, addUser} = require('./rooms');
+const {addRoom, deleteRoom, getRooms, addUser, removeUser, getUsers} = require('./rooms');
 const bodyParser = require('body-parser')
 
 let app = express();
@@ -72,13 +72,12 @@ io.on('connection', (socket) => {
 		switch(response.message) {
 			case 'USER ADDED':
 				//If a user is successfully added to the room, join the user to room
-				socket.join(data.roomName);
+				socket.join(response.room.name);
+				socket.room = response.room.name;
+				socket.user = response.user.name;
 				console.log(io.sockets.adapter.rooms);
 				//Emit user added succesfully to the socket
-				socket.emit('planning:user-added-room', {
-					user: response.user,
-					room: response.room
-				});
+				socket.emit('planning:user-added-room', response);
 				console.log('emit the user added event');
 				//emit welcome message to user
 				socket.emit('planning:welcome-user', response.user);
@@ -93,6 +92,9 @@ io.on('connection', (socket) => {
 			case 'ROOM NOT FOUND': 
 				console.log('room not found');
 				break;
+			case 'HOST JOINED ALREADY':
+				socket.emit('planning:host-joined');
+				break;
 			default:
 				console.log('Unable to add user');
 			
@@ -100,6 +102,39 @@ io.on('connection', (socket) => {
 		
 		//Emit planning rooms with latest changes
 		io.emit('planning:rooms', getRooms());
+	});
+
+	socket.on('planning:leave-room', function(){
+		let response = removeUser(socket.user, socket.room);
+
+		switch(response.message) {
+			case 'USER REMOVED':
+
+				//Braoadcast user left to the room
+				socket.broadcast.to(socket.room).emit('planning:user-left', socket.user);
+
+				//send participant list to the room
+				io.sockets.to(socket.room).emit('planning:participant-list', getUsers(socket.room));	
+
+				socket.leave(socket.room);
+				socket.emit('planning:left-planning');
+
+				//as user goes back to lobby display the current rooms
+				io.emit('planning:rooms', getRooms());
+				break;
+			case 'INVALID USER':
+				break;
+			default:
+				console.log('Some thing broken here');
+		}
+	})
+
+	socket.on('planning:set-story', function(topic){
+		console.log(socket.room);
+		console.log(topic);
+		io.sockets.in(socket.room).emit('planning:story-inprogess', topic);
+		console.log('enabling pointing');
+		io.sockets.in(socket.room).emit('planning:enable-pointing');
 	});
 
 });

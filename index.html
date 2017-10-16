@@ -17,18 +17,23 @@
 		// window.onbeforeunload = closeIt;
 	</script>
 	<script src="assets/js/angular.min.js"></script>
-	<script src="assets/js/angular-ui-router.min.js"></script>
-	<base href="/">
 </head>
 
 <body>
 	<nav class="navbar navbar-dark bg-primary" style="border-radius: 0px;">
 		<span class="navbar-brand">Sprint planning</span>
 	</nav>
-	<div class="jumbotron" ng-controller="AppController">
-		<p>Welcome to the planning poker app. Join a room from the below list or create a room with a 4 digit PIN so your team can join.</p>
+	<div ng-controller="AppController as appCtrl">
+		<lobby ng-if="!(appCtrl.joinedPlanning && appCtrl.room)" 
+			   joined-planning="appCtrl.joinedPlanning"
+			   user="appCtrl.user"
+			   room="appCtrl.room"></lobby>
+		<planning-room ng-if="(appCtrl.joinedPlanning && appCtrl.room)"
+					   joined-planning="appCtrl.joinedPlanning"
+					   user="appCtrl.user" 
+					   room="appCtrl.room"
+					   participants="appCtrl.participants"></planning-room>
 	</div>
-	<ui-view></ui-view>
 	<!-- vendor scripts -->
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="assets/js/jquery-1.11.1.js"></script>
@@ -40,17 +45,16 @@
 
 	<!-- Application scripts -->
 	<script src="app/app.module.js"></script>
-	<script src="app/config/app.config.js"></script>
 	<script src="app/app.controller.js"></script>
-	<script src="app/planning-room/planning-room.controller.js"></script>
+	<script src="app/planning-room/planning-room.component.js"></script>
 	<script src="app/login/login.controller.js"></script>
 	<script src="app/user-info/user-info.component.js"></script>
 	<script src="app/participant-list/participant-list.component.js"></script>
 	<script src="app/planning-table/planning-table.component.js"></script>
 	<script src="app/participant-panel/participant-panel.component.js"></script>
 	<script src="app/host-panel/host-panel.component.js"></script>
+	<script src="app/lobby/lobby.component.js"></script>
 
-	<script src="app/lobby/lobby.controller.js"></script>
 	<script src="app/create-room/create-room.controller.js"></script>
 
 	<!-- Application constants -->

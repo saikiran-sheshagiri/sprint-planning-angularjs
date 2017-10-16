@@ -8,16 +8,12 @@ function HostPanelController($scope, PlanningService, PlanningEventConstants) {
 	var self = this;
 	self.topic = null;
 	self.setTopic = function() {
-		PlanningService.send(PlanningEventConstants.SET_STORY, {
-			name: self.topic
-		});
+		PlanningService.send(PlanningEventConstants.SET_STORY, self.topic);
 	}
 
 	self.resetTopic = function() {
 		self.topic = null;
-		PlanningService.send(PlanningEventConstants.RESET_TOPIC, {
-			name: self.topic
-		});
+		PlanningService.send(PlanningEventConstants.RESET_TOPIC, self.topic);
 	}
 
 	self.reveal = function() {

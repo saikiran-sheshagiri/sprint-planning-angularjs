@@ -1,16 +1,22 @@
+<div class="container" >
+	<h1>Welcome to {{planningRoomCtrl.room.name}}
+		<button class="btn btn-danger pull-right" ng-click="planningRoomCtrl.leave()">Exit planning</button>
+	</h1>
+</div>
+<hr>
+<br>
 <div class="container">
 	<div class="row">
 		<div class="col-sm-8">
 			<div class="panel panel-default">
-				<planning-table topic-enabled="planningRoomCtrl.topicInProgress"
-								topic="planningRoomCtrl.topic" 
-								is-host="planningRoomCtrl.isHost" 
-								participants="planningRoomCtrl.participantPoints"
+				<planning-table topic="planningRoomCtrl.topic" 
+								is-host="planningRoomCtrl.user.isHost" 
+								participants="planningRoomCtrl.participants"
 								show-points="planningRoomCtrl.showPoints"></planning-table>
 			</div>
 			<div class="panel panel-default">
-				<participant-panel ng-if="!planningRoomCtrl.isHost" topic="planningRoomCtrl.topic" pointing-enabled="planningRoomCtrl.pointingEnabled"></participant-panel>
-				<host-panel ng-if="planningRoomCtrl.isHost" topic="planningRoomCtrl.topic"></host-panel>
+				<participant-panel ng-if="!planningRoomCtrl.user.isHost" topic="planningRoomCtrl.topic" pointing-enabled="planningRoomCtrl.pointingEnabled"></participant-panel>
+				<host-panel ng-if="planningRoomCtrl.user.isHost" topic="planningRoomCtrl.topic"></host-panel>
 			</div>
 		</div>
 		<div class="col-sm-4">

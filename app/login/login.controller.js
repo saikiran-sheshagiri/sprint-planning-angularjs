@@ -1,8 +1,8 @@
 angular.module('app').controller('LoginController', LoginController);
 
-LoginController.$inject = ['PlanningService', '$uibModalInstance', '$scope', 'PlanningEventConstants', 'room', '$state'];
+LoginController.$inject = ['PlanningService', '$uibModalInstance', '$scope', 'PlanningEventConstants', 'room'];
 
-function LoginController(PlanningService, $uibModalInstance, $scope, PlanningEventConstants, room, $state){
+function LoginController(PlanningService, $uibModalInstance, $scope, PlanningEventConstants, room){
 	var self = this;
 	self.isHost = false;
 	self.isChicken = false;
@@ -12,10 +12,8 @@ function LoginController(PlanningService, $uibModalInstance, $scope, PlanningEve
 		self.hostAlreadyJoined = true;
 	});
 
-	PlanningService.listen(PlanningEventConstants.USER_ADDED_ROOM, function(data){
-		$uibModalInstance.close();
-		
-		$state.go('room', {roomName: data.room.name, user: data.user, room: data.room});
+	PlanningService.listen(PlanningEventConstants.USER_ADDED_ROOM, function(response){
+		$uibModalInstance.close(response);
 	});
 
 	self.join = function() {
