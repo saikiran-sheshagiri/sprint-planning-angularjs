@@ -13,7 +13,7 @@ function HostPanelController($scope, PlanningService, PlanningEventConstants) {
 
 	self.resetTopic = function() {
 		self.topic = null;
-		PlanningService.send(PlanningEventConstants.RESET_TOPIC, self.topic);
+		PlanningService.send(PlanningEventConstants.RESET_TOPIC);
 	}
 
 	self.reveal = function() {
@@ -25,6 +25,5 @@ angular.module('app').component('hostPanel', {
 	templateUrl: '/app/host-panel/host-panel.template.html',
 	controller: HostPanelController,
 	bindings: {
-		topic: '='
 	}
 });

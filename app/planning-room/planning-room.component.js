@@ -7,50 +7,12 @@ function PlanningRoomController($uibModal, PlanningService, PlanningEventConstan
 	var self = this;
 
 	self.topic = null;
-
-	self.topicInProgress = false;
-
+	self.topicInprogress = false;
 	self.pointingEnabled = false;
 
 	self.showPoints = false;
-	
-	// $scope.$on('reset-topic', function(event, data) {
-	// 	self.topicInProgress = false;
-		
-	// });
 
-	PlanningService.listen(PlanningEventConstants.STORY_INPROGRESS, function(topic){
-		self.topic = topic;
-
-		if (topic === null) {
-			//self.participantPoints = [];
-			//self.topicInProgress = false;
-			self.showPoints = false;
-		}
-		else {
-			//self.participantPoints = planning.clients;
-			//self.topicInProgress = true;	
-		}
-	});
-
-	/**
-
-	PlanningService.listen(PlanningEventConstants.ENABLE_POINTING, function(){
-		self.pointingEnabled = true;
-	});
-
-	PlanningService.listen(PlanningEventConstants.DISABLE_POINTING, function(){
-		self.pointingEnabled = false;
-	});
-
-	PlanningService.listen(PlanningEventConstants.SHOW_POINTS, function() {
-		self.showPoints = true;
-	});
-	*/
-
-///END OF OLD CODE
-
-//This is the start of Version1 code
+	//This is the start of Version1 code
 
 	self.leave = function() {
 		PlanningService.send(PlanningEventConstants.LEAVE_ROOM);
@@ -68,6 +30,37 @@ function PlanningRoomController($uibModal, PlanningService, PlanningEventConstan
 	//show a message when user left planning to all users in room
 	PlanningService.listen(PlanningEventConstants.USER_LEFT_PLANNING, function(participant) {
 		toastr.info(participant + ' left planning');
+	});
+
+	//Enable pointing in the planning room when a topic is ready
+	PlanningService.listen(PlanningEventConstants.ENABLE_POINTING, function(){
+		self.pointingEnabled = true;
+	});
+
+	//set topic and topicInProgress when a topic message is received
+	PlanningService.listen(PlanningEventConstants.STORY_INPROGRESS, function(topic){
+		self.topic = topic.name;
+		self.participantUsers = topic.users;
+		self.topicInprogress = true;
+	});
+
+	//disable pointing when pointing is disabled
+	PlanningService.listen(PlanningEventConstants.DISABLE_POINTING, function(){
+		self.pointingEnabled = false;
+	});
+
+
+	PlanningService.listen(PlanningEventConstants.TOPIC_USERS_POINTS, function(topic){
+		self.participantUsers = topic.users
+	});
+
+	PlanningService.listen(PlanningEventConstants.SHOW_POINTS, function() {
+		self.showPoints = true;
+	});
+
+	PlanningService.listen(PlanningEventConstants.TOPIC_CLOSED, function() {
+		self.showPoints = false;
+		self.topicInprogress = false;
 	});
 
 }

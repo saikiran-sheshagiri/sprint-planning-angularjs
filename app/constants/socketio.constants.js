@@ -18,5 +18,7 @@ angular.module('app').constant('PlanningEventConstants', {
 		JOIN_ROOM: 'planning:join-room',
 		USER_ADDED_ROOM: 'planning:user-added-room',
 		LEAVE_ROOM: 'planning:leave-room',
-		USER_LEFT_PLANNING: 'planning:user-left'
+		USER_LEFT_PLANNING: 'planning:user-left',
+		TOPIC_USERS_POINTS: 'planning:topic-points',
+		TOPIC_CLOSED: 'planning:topic-closed'
 	});

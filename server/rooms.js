@@ -17,7 +17,8 @@ exports.addRoom = (roomName, accessCode) => {
 		ROOMS.push({
 			name: roomName,
 			secret: accessCode,
-			users: []
+			users: [],
+			topics: []
 		});
 		return {
 			message: 'ADDED',
@@ -50,7 +51,7 @@ exports.addUser = (userName, isHost, isChicken, roomName) => {
 	let user = {
 		name: userName,
 		isHost: isHost,
-		isChicken: isChicken,
+		isChicken: isChicken
 	},
 	message;
 
@@ -94,6 +95,54 @@ exports.removeUser = (userName, roomName) => {
 			message: 'INVALID USER',
 			room: room
 		}
+	}
+}
+
+exports.addTopic = (roomName, topicName) => {
+	if(roomExists(roomName)) {
+		let room = getRoom(roomName);
+		let participantUsers = _.filter(room.users, { 'isHost': false, 'isChicken': false });
+
+
+		let topic = {
+			name: topicName,
+			users: _.map(participantUsers, function(participant){
+				participant.points = 0;
+				return participant;
+			})
+		}
+
+		room.topics.push(topic);
+		console.log(topic);
+		return {
+			message: 'ADDED TOPIC',
+			topic: topic,
+			room: room
+		}
+	} else {
+		console.log('invalid room name');
+	}
+}
+
+exports.addPoints = (roomName, topicName, user, points) => {
+	if(roomExists(roomName)) {
+		let room = getRoom(roomName);
+
+		//TODO: add valdiation here
+		let topic = _.find(room.topics, {'name': topicName});
+
+		let userPointed = _.find(topic.users, { 'name': user.name });
+		userPointed.points = points;
+		console.log(room);
+		return {
+			message: 'POINTS ADDED',
+			user: userPointed,
+			room: room,
+			topic: topic
+		};
+	}
+	else {
+		console.log('INVALID ROOM NAME');
 	}
 }
 

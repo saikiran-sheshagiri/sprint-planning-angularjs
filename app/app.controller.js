@@ -13,7 +13,7 @@ function AppController(PlanningService, PlanningEventConstants, $rootScope) {
 
 	//As soon as user joined the room show a welcome message
 	PlanningService.listen(PlanningEventConstants.WELCOME_USER, function(participant){
-		toastr.info('Welcome, ' + participant.name.toUpperCase() + ', to the planning');
+		toastr.info('Welcome ' + participant.name.toUpperCase() + ', to the planning');
 	});
 
 	//show message when a user joined the room

@@ -1,8 +1,9 @@
+PlanningTableController.$inject = ['PlanningService', 'PlanningEventConstants'];
 
-function PlanningTableController() {
+function PlanningTableController(PlanningService, PlanningEventConstants) {
 	var self = this;
 
-	self.topicEnabled = !!self.topic;
+
 }
 
 angular.module('app').component('planningTable', {
@@ -10,6 +11,7 @@ angular.module('app').component('planningTable', {
 	controller: PlanningTableController,
 	bindings: {
 		topic: '=',
+		topicInprogress: '=',
 		isHost: '=',
 		participants: '=',
 		showPoints: '='

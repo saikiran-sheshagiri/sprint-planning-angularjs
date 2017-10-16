@@ -12,8 +12,8 @@ function ParticipantPanelController($scope, PlanningService, PlanningEventConsta
 			var r = confirm("Confirm your points - " + points);
 			if (r) {
 				PlanningService.send(PlanningEventConstants.SEND_POINTS, {
-					socket_id: PlanningService.socket.id,
-					topic: self.topic.name,
+					user: self.user,
+					topic: self.topic,
 					points: points
 				});
 
@@ -27,6 +27,7 @@ angular.module('app').component('participantPanel', {
 	controller: ParticipantPanelController,
 	bindings: {
 		topic: '=',
-		pointingEnabled: '='
+		pointingEnabled: '=',
+		user: '='
 	}
 });

@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const SocketIO = require('socket.io');
 const path = require('path');
-const {addRoom, deleteRoom, getRooms, addUser, removeUser, getUsers} = require('./rooms');
+const {addRoom, deleteRoom, getRooms, addUser, removeUser, getUsers, addTopic, addPoints} = require('./rooms');
 const bodyParser = require('body-parser')
 
 let app = express();
@@ -127,14 +127,66 @@ io.on('connection', (socket) => {
 			default:
 				console.log('Some thing broken here');
 		}
-	})
 
-	socket.on('planning:set-story', function(topic){
-		console.log(socket.room);
-		console.log(topic);
-		io.sockets.in(socket.room).emit('planning:story-inprogess', topic);
+		if(response && reponse.room && response.room.users && response.room.users.length === 0) {
+			deleteRoom(response.room.name);
+			io.emit('planning:rooms', getRooms());
+		}
+	});
+
+	socket.on('planning:set-story', function(topic) {
+		let response = addTopic(socket.room, topic);
+		io.to(socket.room).emit('planning:story-inprogess', response.topic);
 		console.log('enabling pointing');
-		io.sockets.in(socket.room).emit('planning:enable-pointing');
+		io.to(socket.room).emit('planning:enable-pointing');
+	});
+
+	socket.on('planning:reset-topic', function(topic) {
+
+		io.to(socket.room).emit('planning:topic-closed');
+
+		io.to(socket.room).emit('planning:disable-pointing');
+	});
+
+	socket.on('planning:send-points', function (details) {
+		console.log(details);
+		
+		let response = addPoints(socket.room, details.topic, details.user, details.points);
+		console.log(response);
+
+		io.to(socket.room).emit('planning:topic-points', response.topic);
+
+		socket.emit('planning:disable-pointing');
+	});
+
+	socket.on('planning:reveal-points', function(){
+		io.to(socket.room).emit('planning:show-points');
+	});
+
+	socket.on('disconnect', function () {
+		let response = removeUser(socket.user, socket.room);
+		
+		switch(response.message) {
+			case 'USER REMOVED':	
+				//Braoadcast user left to the room
+				socket.broadcast.to(socket.room).emit('planning:user-left', socket.user);
+				//send participant list to the room
+				io.sockets.to(socket.room).emit('planning:participant-list', getUsers(socket.room));	
+				socket.leave(socket.room);
+
+				//as user goes back to lobby display the current rooms
+				io.emit('planning:rooms', getRooms());
+				break;
+			case 'INVALID USER':
+				break;
+			default:
+				console.log('Some thing broken here');
+		}
+
+		if(response.room.users.length === 0) {
+			deleteRoom(response.room.name);
+			io.emit('planning:rooms', getRooms());
+		}
 	});
 
 });

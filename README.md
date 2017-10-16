@@ -18,3 +18,4 @@
 14. Reveal points
 15. Reset topic
 16. Clean up code.
+17. Validation for topic\story form
