@@ -1,9 +1,9 @@
 <div class="panel-heading">
-	Topic/User story <span ng-if="$ctrl.topicInprogress" class="topic-info">{{$ctrl.topic}}</span></div>
+	Topic/User story <span ng-if="$ctrl.topicInprogress" class="topic-info">{{$ctrl.topicInprogress.topic}}</span></div>
 <div class="panel-body">
 	<div ng-if="$ctrl.topicInprogress" class="row">
-		<div class="col-sm-2 participant-points" ng-repeat="participant in $ctrl.participants">
-			<p>{{participant.name}}</p>
+		<div class="col-sm-2 participant-points" ng-repeat="participant in $ctrl.topicInprogress.participants">
+			<p>{{participant.user.name}}</p>
 			<div class="card" ng-class="{'points-received': participant.points}">
 				<span class="points" ng-class="{'show-points': $ctrl.showPoints}">
 					{{participant.points}}

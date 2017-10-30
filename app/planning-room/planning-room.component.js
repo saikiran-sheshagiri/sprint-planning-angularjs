@@ -7,6 +7,7 @@ function PlanningRoomController($uibModal, PlanningService, PlanningEventConstan
 	var self = this;
 
 	self.topic = null;
+	self.room = null;
 	self.topicInprogress = false;
 	self.pointingEnabled = false;
 
@@ -15,7 +16,10 @@ function PlanningRoomController($uibModal, PlanningService, PlanningEventConstan
 	//This is the start of Version1 code
 
 	self.leave = function() {
-		PlanningService.send(PlanningEventConstants.LEAVE_ROOM);
+		var r = confirm("Are you sure, you want to leave planning? (All data will be lost)");
+		if (r == true) {	
+			PlanningService.send(PlanningEventConstants.LEAVE_ROOM);
+		} 
 	}
 
 	/** REGISTERING SOCKETIO EVENTS */
@@ -39,9 +43,11 @@ function PlanningRoomController($uibModal, PlanningService, PlanningEventConstan
 
 	//set topic and topicInProgress when a topic message is received
 	PlanningService.listen(PlanningEventConstants.STORY_INPROGRESS, function(topic){
-		self.topic = topic.name;
-		self.participantUsers = topic.users;
-		self.topicInprogress = true;
+		self.topicInprogress = topic;
+	});
+
+	PlanningService.listen(PlanningEventConstants.ROOM_INFO, function(room){
+		self.room = room;
 	});
 
 	//disable pointing when pointing is disabled

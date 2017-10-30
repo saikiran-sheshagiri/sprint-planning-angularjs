@@ -1,9 +1,9 @@
 angular.module('app').controller('CreateRoomController', CreateRoomController);
 
-CreateRoomController.$inject = ['PlanningService', '$uibModalInstance', '$scope', 'PlanningEventConstants', 'RoomsService'];
+CreateRoomController.$inject = ['PlanningService', '$uibModalInstance', '$scope', 'PlanningEventConstants', 'RoomsService', 'PlanningAppConstants'];
 
 
-function CreateRoomController(PlanningService, $uibModalInstance, $scope, PlanningEventConstants, RoomsService){
+function CreateRoomController(PlanningService, $uibModalInstance, $scope, PlanningEventConstants, RoomsService, PlanningAppConstants){
 
 	var self = this;
 	self.roomAlreadyExists = false;
@@ -16,12 +16,12 @@ function CreateRoomController(PlanningService, $uibModalInstance, $scope, Planni
 
 		RoomsService.createRoom(self.roomName, self.accessCode)
 					.then(function(response){
-						self.rooms = response.data.rooms;
+						self.rooms = response.data.content;
 
-						if(response.data.message === 'ADDED') {
+						if(response.data.message === PlanningAppConstants.ROOM_ADDED) {
 							$uibModalInstance.close(self.rooms);
 						}
-						else if(response.data.message === 'ALREADY_EXISTS') {
+						else if(response.data.message === PlanningAppConstants.ROOM_EXISTS) {
 							self.roomAlreadyExists = true;
 						}
 					}, function (error) {

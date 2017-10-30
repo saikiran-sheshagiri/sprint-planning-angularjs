@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/server.js",
     "dev": "nodemon index.js",
-    "version1": "nodemon server/server.js"
+	"version1": "nodemon server/server.js",
+	"version-tsc": "nodemon server/server.1.js"
   },
   "author": "Saikiran Sheshagiri",
   "license": "ISC",

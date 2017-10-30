@@ -10,10 +10,8 @@ angular.module('app').component('planningTable', {
 	templateUrl: '/app/planning-table/planning-table.template.html',
 	controller: PlanningTableController,
 	bindings: {
-		topic: '=',
 		topicInprogress: '=',
 		isHost: '=',
-		participants: '=',
 		showPoints: '='
 	}
 });

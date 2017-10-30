@@ -1,6 +1,6 @@
-LobbyController.$inject = ['$scope', '$uibModal', 'PlanningEventConstants', 'PlanningService'];
+LobbyController.$inject = ['$scope', '$uibModal', 'PlanningEventConstants', 'PlanningService', 'PlanningAppConstants'];
 
-function LobbyController($scope, $uibModal, PlanningEventConstants, PlanningService) {
+function LobbyController($scope, $uibModal, PlanningEventConstants, PlanningService, PlanningAppConstants) {
 
 	var self = this;
 	self.rooms = [];
@@ -37,10 +37,10 @@ function LobbyController($scope, $uibModal, PlanningEventConstants, PlanningServ
 		});
 	
 		loginModalInstance.result.then(function (response) {
-			if(response.message === 'USER ADDED') {
+			if(response.message === PlanningAppConstants.USER_ADDED) {
 				self.joinedPlanning = true;
-				self.user = response.user;
-				self.room = response.room;
+				self.user = response.content.user;
+				self.room = response.content.room;
 			}
 
 			console.log(new Date() + ' :: LOGIN MODAL INSTANCE - CLOSED');

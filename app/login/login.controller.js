@@ -8,6 +8,7 @@ function LoginController(PlanningService, $uibModalInstance, $scope, PlanningEve
 	self.isChicken = false;
 	self.hostAlreadyJoined = false;
 	self.invalidAccessCode = false;
+	self.invalidUserName = false;
 	
 	PlanningService.listen(PlanningEventConstants.HOST_ALREADY_JOINED, function() {
 		self.hostAlreadyJoined = true;
@@ -21,7 +22,15 @@ function LoginController(PlanningService, $uibModalInstance, $scope, PlanningEve
 		self.invalidAccessCode = true;
 	});
 
+	PlanningService.listen(PlanningEventConstants.INVAID_USER_NAME, function() {
+		self.invalidUserName = true;
+	});
+
 	self.join = function() {
+		self.hostAlreadyJoined = false;
+		self.invalidAccessCode = false;
+		self.invalidUserName = false;
+
 		PlanningService.send(PlanningEventConstants.JOIN_ROOM, {
 			name: self.userName,
 			accessCode: self.accessCode,

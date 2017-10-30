@@ -21,5 +21,7 @@ angular.module('app').constant('PlanningEventConstants', {
 		USER_LEFT_PLANNING: 'planning:user-left',
 		TOPIC_USERS_POINTS: 'planning:topic-points',
 		TOPIC_CLOSED: 'planning:topic-closed',
-		INVALID_ACCESS_CODE: 'planning:invali-accesscode'
+		INVALID_ACCESS_CODE: 'planning:invalid-accesscode',
+		INVAID_USER_NAME: 'planning:invalid-username',
+		ROOM_INFO: 'planning:room-info'
 	});

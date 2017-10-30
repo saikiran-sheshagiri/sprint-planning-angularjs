@@ -1,8 +1,8 @@
 angular.module('app').controller('AppController', AppController);
 
-AppController.$inject = ['PlanningService', 'PlanningEventConstants', '$rootScope'];
+AppController.$inject = ['PlanningService', 'PlanningEventConstants', '$rootScope', '$scope'];
 
-function AppController(PlanningService, PlanningEventConstants, $rootScope) {
+function AppController(PlanningService, PlanningEventConstants, $rootScope, $scope) {
 
 	var self = this;
 	self.joinedPlanning = false;
@@ -26,4 +26,5 @@ function AppController(PlanningService, PlanningEventConstants, $rootScope) {
 	PlanningService.listen(PlanningEventConstants.PARTICIPANT_LIST, function(participants){
 		self.participants = participants;
 	});
+	
 }

@@ -3,7 +3,8 @@ const http = require('http');
 const SocketIO = require('socket.io');
 const path = require('path');
 const {addRoom, deleteRoom, getRooms, addUser, removeUser, getUsers, addTopic, addPoints} = require('./rooms');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+
 
 let app = express();
 let server = http.Server(app);
