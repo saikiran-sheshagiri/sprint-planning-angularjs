@@ -15,8 +15,7 @@
 			</div>
 			<div class="panel panel-default">
 				<participant-panel ng-if="!planningRoomCtrl.user.isHost" 
-								   topic="planningRoomCtrl.topic" 
-								   pointing-enabled="planningRoomCtrl.pointingEnabled"
+								   topic-inprogress="planningRoomCtrl.topicInprogress" 
 								   user="planningRoomCtrl.user">
 				</participant-panel>
 				<host-panel ng-if="planningRoomCtrl.user.isHost">

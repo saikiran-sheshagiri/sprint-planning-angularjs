@@ -8,6 +8,7 @@ function AppController(PlanningService, PlanningEventConstants, $rootScope, $sco
 	self.joinedPlanning = false;
 	self.room = null;
 	self.user = null;
+	self.topicInprogress = null;
 
 
 
@@ -27,4 +28,14 @@ function AppController(PlanningService, PlanningEventConstants, $rootScope, $sco
 		self.participants = participants;
 	});
 	
+
+	PlanningService.listen(PlanningEventConstants.ROOM_INFO, function(room){
+		self.room = room;
+	});
+
+
+	//set topic and topicInProgress when a topic message is received
+	PlanningService.listen(PlanningEventConstants.STORY_INPROGRESS, function(topic){
+		self.topicInprogress = topic;
+	});
 }

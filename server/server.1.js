@@ -2,9 +2,9 @@ const express = require('express');
 const http = require('http');
 const SocketIO = require('socket.io');
 const path = require('path');
-const {addRoom, deleteRoom, getRooms, addUser, removeUser, getUsers, addTopic, addPoints, bootStrap} = require('./planningController.js');
+const {addRoom, deleteRoom, getRooms, addUser, removeUser, getUsers, addTopic, addPoints, updateTopic} = require('./planningController.js');
 const bodyParser = require('body-parser');
-
+const _ = require('lodash');
 
 let app = express();
 let server = http.Server(app);
@@ -108,6 +108,15 @@ io.on('connection', (socket) => {
 					io.sockets.to(room.name).emit('planning:participant-list', room.users);	
 					console.log(room);			
 					console.log('emitting all particiapnts to room' + room.name);
+
+					//if a topic in progress and user is a participant
+					let cTopic = room.topicInProgress();
+					if(typeof cTopic !== 'undefined' && !user.isHost && !user.isChicken) {
+						updateTopic(room, user);
+
+						io.to(socket.room).emit('planning:story-inprogess', room.topicInProgress());
+						io.to(socket.room).emit('planning:room-info', room);
+					}
 				} else {
 					//Need to implement fail safe
 				}
@@ -135,6 +144,8 @@ io.on('connection', (socket) => {
 						socket.broadcast.to(socket.room).emit('planning:user-left', socket.user);
 						//send participant list to the room
 						io.sockets.to(socket.room).emit('planning:participant-list', room.users);	
+						io.to(socket.room).emit('planning:story-inprogess', room.topicInProgress());
+
 						socket.emit('planning:left-planning');
 						socket.leave(socket.room);
 
@@ -165,11 +176,6 @@ io.on('connection', (socket) => {
 			console.log(status);
 			io.to(socket.room).emit('planning:story-inprogess', room.topicInProgress());
 			io.to(socket.room).emit('planning:room-info', room);
-			
-
-			//add validation about invalif story or some error
-			console.log('enabling pointing');
-			io.to(socket.room).emit('planning:enable-pointing');
 		} else {
 			console.log('Invalid room handle event - notify user');
 		}
@@ -178,20 +184,35 @@ io.on('connection', (socket) => {
 
 	socket.on('planning:reset-topic', function(topic) {
 
-		io.to(socket.room).emit('planning:topic-closed');
+		if(PLANNING_APP.roomExists(socket.room)) {
+			let room = PLANNING_APP.getRoom(socket.room);
+			room.resetTopics();
 
-		io.to(socket.room).emit('planning:disable-pointing');
+			io.to(socket.room).emit('planning:story-inprogess', room.topicInProgress());
+		} else {
+			console.log('Invalid room reset topic');
+		}
+
 	});
 
-	socket.on('planning:send-points', function (details) {
-		console.log(details);
+	socket.on('planning:send-points', function (points) {
+
+
+		if(PLANNING_APP.roomExists(socket.room)) {
+			let room = PLANNING_APP.getRoom(socket.room);
+			let topic = room.topicInProgress();
+			let user = room.getUser(socket.user);
+
+			let participantPoints = _.find(topic.participants, { 'user': user });
+			participantPoints.points = points;
+
+			io.to(socket.room).emit('planning:story-inprogess', room.topicInProgress());
+
+		} else {
+			console.log('Invalid room sending points');
+		}
 		
-		let response = addPoints(socket.room, details.topic, details.user, details.points);
-		console.log(response);
 
-		io.to(socket.room).emit('planning:topic-points', response.topic);
-
-		socket.emit('planning:disable-pointing');
 	});
 
 	socket.on('planning:reveal-points', function(){
@@ -212,7 +233,7 @@ io.on('connection', (socket) => {
 						socket.broadcast.to(socket.room).emit('planning:user-left', socket.user);
 						//send participant list to the room
 						io.sockets.to(socket.room).emit('planning:participant-list', room.users);	
-
+						io.to(socket.room).emit('planning:story-inprogess', room.topicInProgress());
 						socket.emit('planning:left-planning');
 						socket.leave(socket.room);
 

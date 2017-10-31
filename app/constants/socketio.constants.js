@@ -1,5 +1,4 @@
 angular.module('app').constant('PlanningEventConstants', {
-		JOIN_PLANNING: 'planning:join',
 		HOST_ALREADY_JOINED: 'planning:host-joined',
 		WELCOME_USER: 'planning:welcome-user',
 		PARTCIPANT_JOINED:'planning:user-joined',
@@ -8,9 +7,7 @@ angular.module('app').constant('PlanningEventConstants', {
 		LEFT_PLANNING: 'planning:left-planning',
 		SET_STORY:'planning:set-story',
 		STORY_INPROGRESS: 'planning:story-inprogess',
-		ENABLE_POINTING: 'planning:enable-pointing',
 		SEND_POINTS:'planning:send-points',
-		DISABLE_POINTING:'planning:disable-pointing',
 		REVEAL_POINTS: 'planning:reveal-points',
 		SHOW_POINTS: 'planning:show-points',
 		RESET_TOPIC: 'planning:reset-topic',
@@ -19,8 +16,6 @@ angular.module('app').constant('PlanningEventConstants', {
 		USER_ADDED_ROOM: 'planning:user-added-room',
 		LEAVE_ROOM: 'planning:leave-room',
 		USER_LEFT_PLANNING: 'planning:user-left',
-		TOPIC_USERS_POINTS: 'planning:topic-points',
-		TOPIC_CLOSED: 'planning:topic-closed',
 		INVALID_ACCESS_CODE: 'planning:invalid-accesscode',
 		INVAID_USER_NAME: 'planning:invalid-username',
 		ROOM_INFO: 'planning:room-info'

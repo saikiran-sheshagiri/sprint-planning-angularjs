@@ -65,6 +65,12 @@ export function addUser(user: User, room: Room): ResponseMessage {
 
 export function removeUser(user: User, room: Room):ResponseMessage {
 	let response = new ResponseMessage();
+
+	let cTopic = room.topicInProgress();
+	if(typeof cTopic !== 'undefined' && !user.isHost && !user.isChicken) {
+		_.remove(cTopic.participants, {'user': user});
+	}
+
 	room.removeUser(user);
 	response.message = appConstants.USER_REMOVED;	
 	response.content = room;
@@ -104,4 +110,15 @@ export function addTopic(room: Room, topic: Topic):ResponseMessage {
 	
 
 	return response;
+}
+
+export function updateTopic(room: Room, user: User) {
+	let userPoints: Points = new Points();
+	userPoints.points = 0;
+	userPoints.user = user;
+	
+	let topic = room.topicInProgress();
+
+	topic.participants.push(userPoints);
+
 }

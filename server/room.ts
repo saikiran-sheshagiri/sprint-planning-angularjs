@@ -16,6 +16,7 @@ export interface RoomInterface {
 	addTopic(topic: TopicInterface);
 	getHost();
 	topicInProgress();
+	resetTopics();
 }
 
 export class Room implements RoomInterface {
@@ -61,5 +62,11 @@ export class Room implements RoomInterface {
 
 	topicInProgress() {
 		return _.find(this.topics, { 'isActive': true });
+	}
+
+	resetTopics() {
+		this.topics.forEach((topic) => {
+			topic.isActive = false;
+		})
 	}
 }

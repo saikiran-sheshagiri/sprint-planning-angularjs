@@ -32,6 +32,11 @@ var Room = /** @class */ (function () {
     Room.prototype.topicInProgress = function () {
         return _.find(this.topics, { 'isActive': true });
     };
+    Room.prototype.resetTopics = function () {
+        this.topics.forEach(function (topic) {
+            topic.isActive = false;
+        });
+    };
     return Room;
 }());
 exports.Room = Room;

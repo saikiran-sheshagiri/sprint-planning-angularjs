@@ -6,11 +6,7 @@ function PlanningRoomController($uibModal, PlanningService, PlanningEventConstan
 
 	var self = this;
 
-	self.topic = null;
-	self.room = null;
-	self.topicInprogress = false;
 	self.pointingEnabled = false;
-
 	self.showPoints = false;
 
 	//This is the start of Version1 code
@@ -36,37 +32,8 @@ function PlanningRoomController($uibModal, PlanningService, PlanningEventConstan
 		toastr.info(participant + ' left planning');
 	});
 
-	//Enable pointing in the planning room when a topic is ready
-	PlanningService.listen(PlanningEventConstants.ENABLE_POINTING, function(){
-		self.pointingEnabled = true;
-	});
-
-	//set topic and topicInProgress when a topic message is received
-	PlanningService.listen(PlanningEventConstants.STORY_INPROGRESS, function(topic){
-		self.topicInprogress = topic;
-	});
-
-	PlanningService.listen(PlanningEventConstants.ROOM_INFO, function(room){
-		self.room = room;
-	});
-
-	//disable pointing when pointing is disabled
-	PlanningService.listen(PlanningEventConstants.DISABLE_POINTING, function(){
-		self.pointingEnabled = false;
-	});
-
-
-	PlanningService.listen(PlanningEventConstants.TOPIC_USERS_POINTS, function(topic){
-		self.participantUsers = topic.users
-	});
-
 	PlanningService.listen(PlanningEventConstants.SHOW_POINTS, function() {
 		self.showPoints = true;
-	});
-
-	PlanningService.listen(PlanningEventConstants.TOPIC_CLOSED, function() {
-		self.showPoints = false;
-		self.topicInprogress = false;
 	});
 
 }
@@ -79,6 +46,7 @@ angular.module('app').component('planningRoom', {
 		joinedPlanning: '=',
 		user: '=',
 		room: '=',
-		participants: '='
+		participants: '=',
+		topicInprogress: '='
 	}
 });
