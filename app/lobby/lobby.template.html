@@ -12,7 +12,8 @@
 	<div class="list-group existing-rooms"  ng-if="lobbyCtrl.rooms.length">
 		<a href class="list-group-item" ng-repeat="room in lobbyCtrl.rooms" ng-click="lobbyCtrl.join(room)">
 			<h3>{{room.name}}</h3>
-			<p><strong>Host</strong> Michael Cohen<br><strong>Date</strong> Tuesday November 1, 2017</p>
+			<p><strong>Host: </strong><span style="text-transform: capitalize">{{room.host ? room.host.name : 'Not yet joined'}}</span><br><strong>Date: </strong> {{room.createdOn | date:'medium'}}</p>
+			<p class="join-room">Join this room</p>
 		</a>
 	</div>
 	<p  ng-if="lobbyCtrl.rooms.length === 0">

@@ -7,6 +7,7 @@ var Room = /** @class */ (function () {
         this.accessCode = accessCode;
         this.users = new Array();
         this.topics = new Array();
+        this.createdOn = new Date();
     }
     Room.prototype.getUsers = function () {
         return this.users;

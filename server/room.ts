@@ -8,6 +8,7 @@ export interface RoomInterface {
 	accessCode: String;
 	users: UserInterface[];
 	topics: TopicInterface[];
+	createdOn: Date;
 	getUser(userName: String);
 	userExists(userName: String);
 	getUsers();
@@ -24,12 +25,14 @@ export class Room implements RoomInterface {
 	accessCode: String;
 	users: User[];
 	topics: Topic[];
+	createdOn: Date;
 
 	constructor(roomName: String, accessCode: String) {
 		this.name = roomName;
 		this.accessCode = accessCode;
 		this.users = new Array<User>();
 		this.topics = new Array<Topic>();
+		this.createdOn = new Date();
 	}
 
 	getUsers() {

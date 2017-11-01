@@ -53,6 +53,12 @@ function LobbyController($scope, $uibModal, PlanningEventConstants, PlanningServ
 
 	PlanningService.listen(PlanningEventConstants.EXISTING_ROOMS, function(rooms) {
 		self.rooms = rooms;
+
+		_.forEach(self.rooms, function(room) {
+			if(room.users.length) {
+				room.host = _.find(room.users, {'isHost': true});
+			}
+		})
 	});
 
 	console.log('Lobby controller loaded');
