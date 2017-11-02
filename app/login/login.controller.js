@@ -9,7 +9,7 @@ function LoginController(PlanningService, $uibModalInstance, $scope, PlanningEve
 	self.hostAlreadyJoined = false;
 	self.invalidAccessCode = false;
 	self.invalidUserName = false;
-	
+
 	PlanningService.listen(PlanningEventConstants.HOST_ALREADY_JOINED, function() {
 		self.hostAlreadyJoined = true;
 	});

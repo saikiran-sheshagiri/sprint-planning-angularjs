@@ -111,8 +111,11 @@ io.on('connection', (socket) => {
 
 					//if a topic in progress and user is a participant
 					let cTopic = room.topicInProgress();
-					if(typeof cTopic !== 'undefined' && !user.isHost && !user.isChicken) {
-						updateTopic(room, user);
+					if(typeof cTopic !== 'undefined') {
+
+						if (!user.isHost && !user.isChicken) {
+							updateTopic(room, user);
+						}
 
 						io.to(socket.room).emit('planning:story-inprogess', room.topicInProgress());
 						io.to(socket.room).emit('planning:room-info', room);

@@ -2,7 +2,7 @@
 <div class="panel-body">
 	<ul class="all-participants">
 		<li ng-repeat="participant in $ctrl.participants">
-			{{participant.name}}<span ng-if="participant.isHost"> (Host)</span>
+			{{participant.name}}<span ng-if="participant.isHost"> (Host)</span><span ng-if="participant.isChicken"> (C)</span>
 		</li>
 	</ul>
 </div>

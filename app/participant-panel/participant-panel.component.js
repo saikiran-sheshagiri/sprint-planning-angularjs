@@ -16,6 +16,8 @@ function ParticipantPanelController($scope, PlanningService, PlanningEventConsta
 					self.pointingEnabled = false;
 				}
 			} 
+		} else {
+			self.pointingEnabled = false;
 		}
 	});
 

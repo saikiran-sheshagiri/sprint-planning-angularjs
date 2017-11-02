@@ -10,6 +10,9 @@ function CreateRoomController(PlanningService, $uibModalInstance, $scope, Planni
 
 	self.create = function() {
 
+		if(createForm.$invalid) {
+			return;
+		}
 		//reset error messages
 		self.roomAlreadyExists = false;
 		self.rooms = [];

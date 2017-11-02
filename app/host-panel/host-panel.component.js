@@ -25,5 +25,6 @@ angular.module('app').component('hostPanel', {
 	templateUrl: '/app/host-panel/host-panel.template.html',
 	controller: HostPanelController,
 	bindings: {
+		topicInprogress: '='
 	}
 });

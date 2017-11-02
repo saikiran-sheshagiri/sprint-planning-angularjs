@@ -1,8 +1,9 @@
 <div class="panel-heading">
 	Point cards
-	<p><i>Use the below cards to point a topic/story. When a topic/story is selected by Host then below cards turns blue and are selectable. Click on the cards to point.</i></p>
 </div>
-<div class="panel-body">
+<div class="panel-body" ng-if="!$ctrl.user.isChicken">
+	<p><i>Use the below cards to point a topic/story. When a topic/story is selected by Host then below cards turns blue and are selectable. Click on the cards to point.</i></p>
+	<hr>	
 	<div class="row">
 		<div class="participant-points col-sm-2">
 			<div class="participant-card" ng-class="{'enable-pointing': $ctrl.pointingEnabled}" ng-click="$ctrl.sendPoints('1')">
@@ -45,4 +46,8 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="panel-body" ng-if="$ctrl.user.isChicken">
+	<p><i>You logged in listen only mode. Relax and watch the planning :)</i></p>
 </div>

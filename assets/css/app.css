@@ -72,6 +72,11 @@
 	padding: 5px;
 }
 
+.participant-points p {
+	padding-left: 10px;
+	text-transform: capitalize;
+}
+
 .participant-points h4 {
 	color: white;
 	border-bottom: 1px solid black;

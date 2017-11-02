@@ -1,18 +1,17 @@
 <div class="panel-heading">
 	Scrum master actions</div>
 <div class="panel-body">
-	<div class="form-inline">
-		<label>Set topic/user story</label>
-		<input type="text" class="form-control" ng-model="$ctrl.topic" placeholder="Enter topic/user story number" />
-		<button class="btn btn-primary" ng-click="$ctrl.setTopic()">Send</button>
-		<button class="btn btn-danger pull-right" ng-click="$ctrl.resetTopic()">Reset</button>
+	<div class="form-group">
+		<input type="text" class="form-control" ng-model="$ctrl.topic" placeholder="Enter Topic OR User Story Number for discussion" />
 	</div>
-	<br><br>
-	<p><i>If a participant looses connection and rejoins, then click the 'Send' button again to send the topic/userstory.</i></p>
-	<p><i>Use 'Reset' button when pointing is finished.</i></p>
+	<div>
+		<button class="btn btn-primary" ng-click="$ctrl.setTopic()" ng-disabled="$ctrl.topicInprogress">Set Topic</button>
+		<button class="btn btn-danger pull-right" ng-click="$ctrl.resetTopic()" ng-disabled="!$ctrl.topicInprogress">Reset</button>
+	</div>
+	<br>
 	<hr>
-	<p>Click reveal to see the points from participants when every one finished pointing</p>
+	<p>** Click below button only when all participants finished pointing</p>
 	<p class="text-center">
-		<button class="btn btn-success btn-lg" ng-click="$ctrl.reveal()">Reveal</button>
+		<button class="btn btn-success btn-lg" ng-click="$ctrl.reveal()">Reveal Points</button>
 	</p>
 </div>

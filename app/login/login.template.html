@@ -1,4 +1,4 @@
-<form>
+<form name="loginForm">
 	<div class="modal-header">
 		<h3 class="modal-title">Login</h3>
 	</div>
@@ -13,26 +13,28 @@
 			<strong>Invalid user name!</strong> User name already exists, please enter a unique and different user name.
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" ng-model="loginCtrl.userName" placeholder="Enter your name" focus="true" />
+			<input type="text" class="form-control" name="userName" required ng-model="loginCtrl.userName" placeholder="Enter your name" focus="true" />
 		</div>
 		<div class="form-group">
-			<input type="number" class="form-control" ng-model="loginCtrl.accessCode" placeholder="Enter a access code for your room" />	
+			<input type="number" class="form-control" name="accessCode" required ng-model="loginCtrl.accessCode" placeholder="Enter a access code for your room" />	
 		</div>
 		<div class="form-group">
 			<div class="form-check form-check-inline">
 				<label class="form-check-label">
-					<input class="form-check-input" type="checkbox" ng-model="loginCtrl.isHost"> I'm scrum master
+					<input class="form-check-input" type="checkbox" 
+							ng-model="loginCtrl.isHost" ng-disabled="loginCtrl.isChicken"> I'm scrum master
 				</label>
 			</div>
-			<!-- <div class="form-check form-check-inline">
+			<div class="form-check form-check-inline">
 				<label class="form-check-label">
-					<input class="form-check-input" type="checkbox" ng-model="loginCtrl.isChicken"> I'm just listening (Chiken)
+					<input class="form-check-input" type="checkbox" 
+							ng-disabled="loginCtrl.isHost" ng-model="loginCtrl.isChicken"> I'm just listening (Chicken)
 				</label>
-			</div> -->
+			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary" ng-click="loginCtrl.join()">Join</button>
+		<button type="submit" class="btn btn-primary" ng-disabled="loginForm.$invalid" ng-click="loginCtrl.join()">Join</button>
 		<button class="btn btn-cancel" ng-click="loginCtrl.cancel()">Cancel</button>
 	</div>
 </form>

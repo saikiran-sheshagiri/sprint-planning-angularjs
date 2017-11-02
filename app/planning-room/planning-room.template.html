@@ -1,7 +1,7 @@
 <div class="container" >
-	<h1>Welcome to {{planningRoomCtrl.room.name}}
+	<h3>Welcome to <span style="text-transform: capitalize">{{planningRoomCtrl.room.name}}</span> &#123; <small>Access Code: {{planningRoomCtrl.room.accessCode}}</small> &#125;
 		<button class="btn btn-danger pull-right" ng-click="planningRoomCtrl.leave()">Exit planning</button>
-	</h1>
+	</h3>
 </div>
 <hr>
 <br>
@@ -18,7 +18,7 @@
 								   topic-inprogress="planningRoomCtrl.topicInprogress" 
 								   user="planningRoomCtrl.user">
 				</participant-panel>
-				<host-panel ng-if="planningRoomCtrl.user.isHost">
+				<host-panel ng-if="planningRoomCtrl.user.isHost" topic-inprogress="planningRoomCtrl.topicInprogress" >
 				</host-panel>
 			</div>
 		</div>
